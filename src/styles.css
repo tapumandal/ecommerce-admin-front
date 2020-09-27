@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url(assets/home/lib/bootstrap/css/bootstrap.min.css);
+@import url(assets/home/lib/font-awesome/css/font-awesome.min.css);
+@import url(assets/home/lib/animate/animate.min.css);
+@import url(assets/home/lib/ionicons/css/ionicons.min.css);
+@import url(assets/home/lib/owlcarousel/assets/owl.carousel.min.css);
+@import url(assets/home/lib/lightbox/css/lightbox.min.css);
+@import url(assets/home/css/style.css);
+
+/* @import url(assets/plugins/fontawesome-free/css/all.min.css); */
