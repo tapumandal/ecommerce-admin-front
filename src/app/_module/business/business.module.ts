@@ -19,7 +19,7 @@ import { BusinessComponent } from './business.component';
     UserComponent,
     CreateComponent,
     UpdateComponent,
-    BusinessComponent
+    BusinessComponent,
   ],
   imports: [
     CommonModule,
