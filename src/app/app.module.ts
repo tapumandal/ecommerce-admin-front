@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { AuthModule } from "./_module/auth/auth.module";
 import { BusinessModule } from "src/app/_module/business/business.module";
+import { ProductModule } from "src/app/_module/product/product.module";
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { BusinessModule } from "src/app/_module/business/business.module";
     HttpClientModule,
     AppRoutingModule,
     AuthModule,
-    BusinessModule
+    BusinessModule,
+    ProductModule
   ],
   providers: [],
   bootstrap: [AppComponent]
