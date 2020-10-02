@@ -41,7 +41,6 @@ export class NetworkcallingService {
   getProductList() : Observable<any>{
     
     let headers = this.getCommonHeader();
-    console.log(headers);
     return this.http.get(BASE_URL+"product/list", {headers});
   }
 

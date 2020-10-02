@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
+import { Product } from "src/app/_model/product.model";
 
 @Component({
   selector: 'app-product-list',
@@ -7,6 +8,8 @@ import { NetworkcallingService } from 'src/app/_services/networkcalling.service'
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
+
+  products: Product[];
 
   constructor(private networkCalling : NetworkcallingService) { }
 
@@ -17,14 +20,10 @@ export class ProductListComponent implements OnInit {
   loadProductList(){
     this.networkCalling.getProductList().subscribe(
       data => {
-        console.log("Response Success");
-        console.log(data);
+        this.products = data.data;
       },
       err => {
-        console.log("Response Faield");
         console.log(err);
-        console.log("Response Faield Specific");
-        console.log(err.message.error);
       }
     )
   }

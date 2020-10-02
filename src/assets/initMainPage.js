@@ -5,4 +5,5 @@ var App = {
         $('[data-toggle="push-menu"]').PushMenu();
         $('[data-widget="treeview"]').Treeview('init');
     }
+    
 }
