@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
   loginResponse: Loginresponse;
 
   constructor( 
-    private netWorkingCalling : NetworkcallingService, 
+    private networkingCalling : NetworkcallingService, 
     private appStorage: AppStorageService,
     private router: Router ) { }
 
@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginAttempt(){
-    this.netWorkingCalling.loaginRequest(this.username, this.password).subscribe( 
+    this.networkingCalling.loaginRequest(this.username, this.password).subscribe( 
       data => {
         this.appStorage.storeToken(data.jwt);
         this.appStorage.storeUser(data.user);
