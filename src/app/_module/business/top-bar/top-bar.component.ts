@@ -18,7 +18,6 @@ export class TopBarComponent implements OnInit {
   }
   
   logout(){
-    alert("CLICKED");
     this.appStorage.storeClearAll();
     this.router.navigate(['/login']);
   }

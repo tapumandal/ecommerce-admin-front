@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   loginResponse: Loginresponse;
+  btnLoadingIcon = false;
 
   constructor( 
     private networkingCalling : NetworkcallingService, 
@@ -29,6 +30,7 @@ export class LoginComponent implements OnInit {
   }
 
   loginAttempt(){
+    this.btnLoadingIcon = true;
     this.networkingCalling.loaginRequest(this.username, this.password).subscribe( 
       data => {
         this.appStorage.storeToken(data.jwt);

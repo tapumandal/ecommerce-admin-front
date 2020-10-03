@@ -38,7 +38,9 @@
             </div>
             <!-- /.col -->
             <div class="col-4">
-            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block">
+              <i *ngIf="btnLoadingIcon" class="fa fa-refresh fa-spin "></i> Sign In
+            </button>
               <!-- <a routerLink="/dashboard" routerLinkActive="active" class="btn btn-primary btn-block">Sign In</a> -->
             </div>
             <!-- /.col -->

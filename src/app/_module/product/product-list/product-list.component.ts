@@ -10,7 +10,7 @@ import { Product } from "src/app/_model/product.model";
 export class ProductListComponent implements OnInit {
 
   products: Product[];
-
+  btnLoadingIcon = false;
   constructor(private networkCalling : NetworkcallingService) { }
 
   ngOnInit(): void {
