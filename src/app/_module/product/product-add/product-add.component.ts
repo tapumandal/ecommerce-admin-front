@@ -13,8 +13,8 @@ export class ProductAddComponent implements OnInit {
 
   select2plugin: Select2Plugin;
   product: Product;
-  
   productInputForm : FormGroup;
+  categories : string[];
 
   // constructor() { }
   constructor(private formBuilder : FormBuilder) { }
@@ -25,6 +25,8 @@ export class ProductAddComponent implements OnInit {
     $('.select2bs4').select2({
       theme: 'bootstrap4'
     });
+
+    this.categories = ['Grocery', 'Kitchen', 'Oil', 'Spices'];
 
     this.createProductInputForm();
 
@@ -39,6 +41,7 @@ export class ProductAddComponent implements OnInit {
       sellingPricePerUnit: "",
       quantity: ""
     });
+
   }
 
   addProduct(){
@@ -48,6 +51,7 @@ export class ProductAddComponent implements OnInit {
     console.log("Product");
     this.product = this.productInputForm.value;
     console.log(this.product);
+    console.log($(".select2").select2().toArray);
   }
 
 }

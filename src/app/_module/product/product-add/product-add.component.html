@@ -63,15 +63,8 @@
                     <div class="col-md-12"><!-- /.form-group -->
                       <div class="form-group">
                         <label>Categories</label>
-                        <select formControlName="categories" class="select2bs4" multiple="multiple" data-placeholder="Select categories"
-                                style="width: 100%;">
-                          <option>Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
+                        <select formControlName="categories" class="select2bs4" multiple="multiple" data-placeholder="Select categories" style="width: 100%;">
+                          <option *ngFor="let category of categories">{{ category }}</option>
                         </select>
                       </div>
                       <!-- /.form-group -->
