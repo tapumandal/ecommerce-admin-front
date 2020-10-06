@@ -44,4 +44,9 @@ export class NetworkcallingService {
     return this.http.get(BASE_URL+"product/list", {headers});
   }
 
+  addProductRequest(newProduct: any) : Observable<any>{
+    let headers = this.getCommonHeader();
+    return this.http.post(BASE_URL+"product/create", newProduct, {headers});
+  }
+
 }

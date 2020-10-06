@@ -3,6 +3,7 @@ import bsCustomFileInput from 'bs-custom-file-input';
 import { Select2Plugin } from "select2";
 import { Product } from 'src/app/_model/product.model';
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
 
 let selectedCategories = "";
 
@@ -18,13 +19,10 @@ export class ProductAddComponent implements OnInit {
   productInputForm : FormGroup;
   categoryOptions : string[];
   
-
-  // constructor() { }
-  constructor(private formBuilder : FormBuilder) { }
+  constructor(private formBuilder : FormBuilder, private networkcalling: NetworkcallingService) { }
 
   ngOnInit(): void {
     bsCustomFileInput.init();
-    // $(".select2").select2();
     $('.categorySelect').select2({
       theme: 'bootstrap4'
     });
@@ -60,7 +58,18 @@ export class ProductAddComponent implements OnInit {
   addProduct(){
     this.product = this.productInputForm.value;
     this.product.categories = selectedCategories;
-    console.log(this.product);      
+    console.log(this.product);
+
+    this.networkcalling.addProductRequest(this.product).subscribe(
+      data => {
+          console.log("Product Respnse");
+          console.log(data.data);
+      },
+      err => {
+        console.log("Product Respnse Failed");
+        console.log(err);
+      }
+    );
   }
 
 }
