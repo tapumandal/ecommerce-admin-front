@@ -40,7 +40,7 @@
                   <div class="row">
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Product Name</label>
+                        <label for="name">Product Name</label>
                         <input type="text" class="form-control" formControlName="name" id="name" placeholder="Name">
                       </div>
                     </div>
@@ -50,8 +50,8 @@
                         <label for="exampleInputFile">Product Image</label>
                         <div class="input-group">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" formControlName="image" id="exampleInputFile">
-                            <label class="custom-file-label" for="exampleInputFile">Choose Image</label>
+                            <input type="file" class="custom-file-input" formControlName="image" id="productImage">
+                            <label class="custom-file-label" for="productImage">Choose Image</label>
                           </div>
                           <div class="input-group-append">
                             <span class="input-group-text" id="">Upload</span>
@@ -62,44 +62,69 @@
                     
                     <div class="col-md-12"><!-- /.form-group -->
                       <div class="form-group">
-                        <label>Categories</label>
-                        <select formControlName="categories" class="select2bs4" multiple="multiple" data-placeholder="Select categories" style="width: 100%;">
-                          <option *ngFor="let category of categories">{{ category }}</option>
+                        <label>Categories (Company, Type etc)</label>
+                        <select formControlName="categories"   class="categorySelect" multiple="multiple" data-placeholder="Select categories" style="width: 100%;" autocomplete="off">
+                          <!-- <option *ngFor="let category of categories">{{ category }}</option> -->
+                          <option *ngFor="let option of categoryOptions" >{{ option }}</option>
                         </select>
                       </div>
-                      <!-- /.form-group -->
-                      <!-- <div class="form-group">
-                        <label>Minimal</label>
-                        <select class="form-control select2bs4" style="width: 100%;">
-                          <option selected="selected">Alabama</option>
-                          <option>Alaska</option>
-                          <option>California</option>
-                          <option>Delaware</option>
-                          <option>Tennessee</option>
-                          <option>Texas</option>
-                          <option>Washington</option>
-                        </select>
-                      </div> -->
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Buying Price</label>
+                        <label for="buyingPrice">Buying Price</label>
                         <input formControlName="buyingPricePerUnit" type="text" class="form-control" id="buyingPrice" placeholder="Buying Price">
                       </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Selling Price</label>
+                        <label for="sellingPrice">Selling Price</label>
                         <input formControlName="sellingPricePerUnit" type="text" class="form-control" id="sellingPrice" placeholder="Selling Price">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="discountPrice">Discount Price</label>
+                        <input formControlName="discountPrice" type="text" class="form-control" id="discountPrice" placeholder="Discount Price">
+                      </div>
+                    </div>
+
+                    <div class="col-md-3">
+                      <div class="form-group">
+                        <label for="discountTitle">Discount Title</label>
+                        <input formControlName="discountTitle" type="text" class="form-control" id="discountTitle" placeholder="Discount Title">
                       </div>
                     </div>
 
                     <div class="col-md-4">
                       <div class="form-group">
-                        <label for="exampleInputEmail1">Quantity</label>
+                        <label for="unit">Unit</label>
+                        <input formControlName="unit" type="text" class="form-control" id="unit" placeholder="Unit">
+                      </div>
+                    </div>
+                      
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="unitTitle">Unit Title</label>
+                        <input formControlName="unitTitle" type="text" class="form-control" id="unitTitle" placeholder="Unit Title">
+                      </div>
+                    </div>
+                      
+
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="quantity">Quantity</label>
                         <input formControlName="quantity" type="text" class="form-control" id="quantity" placeholder="Quantity">
+                      </div>
+                    </div>
+
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="description">Description</label>
+                        <textarea type="text" class="form-control" formControlName="description" id="description" placeholder="Description"></textarea>
                       </div>
                     </div>
                       

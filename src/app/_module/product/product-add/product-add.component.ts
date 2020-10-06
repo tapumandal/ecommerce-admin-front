@@ -4,6 +4,8 @@ import { Select2Plugin } from "select2";
 import { Product } from 'src/app/_model/product.model';
 import { FormGroup, FormBuilder } from "@angular/forms";
 
+let selectedCategories = "";
+
 @Component({
   selector: 'app-product-add',
   templateUrl: './product-add.component.html',
@@ -14,21 +16,27 @@ export class ProductAddComponent implements OnInit {
   select2plugin: Select2Plugin;
   product: Product;
   productInputForm : FormGroup;
-  categories : string[];
+  categoryOptions : string[];
+  
 
   // constructor() { }
   constructor(private formBuilder : FormBuilder) { }
 
   ngOnInit(): void {
     bsCustomFileInput.init();
-    $(".select2").select2();
-    $('.select2bs4').select2({
+    // $(".select2").select2();
+    $('.categorySelect').select2({
       theme: 'bootstrap4'
     });
 
-    this.categories = ['Grocery', 'Kitchen', 'Oil', 'Spices'];
+    this.categoryOptions = ['Grocery', 'Kitchen', 'Oil', 'Spices'];
 
     this.createProductInputForm();
+    
+    $(".categorySelect").on("select2:select select2:unselect", function (e) {
+      var items= $(this).val();
+      selectedCategories = items.toLocaleString().valueOf().trim();
+    })
 
   }
 
@@ -37,21 +45,22 @@ export class ProductAddComponent implements OnInit {
       name: "",
       image: "",
       categories: "",
+      description: "",
       buyingPricePerUnit: "",
       sellingPricePerUnit: "",
-      quantity: ""
+      discountPrice: "",
+      discountTitle: "",
+      unit: "",
+      unitTitle: "",
+      quantity: "",
     });
 
   }
 
   addProduct(){
-    console.log("Product Form");
-    console.log(this.productInputForm.value);
-
-    console.log("Product");
     this.product = this.productInputForm.value;
-    console.log(this.product);
-    console.log($(".select2").select2().toArray);
+    this.product.categories = selectedCategories;
+    console.log(this.product);      
   }
 
 }
