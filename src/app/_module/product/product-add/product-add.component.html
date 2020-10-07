@@ -50,7 +50,7 @@
                         <label for="exampleInputFile">Product Image</label>
                         <div class="input-group">
                           <div class="custom-file">
-                            <input type="file" class="custom-file-input" formControlName="image" id="productImage">
+                            <input type="file" (change)="productImageUploaded($event)" class="custom-file-input" formControlName="image" id="productImage">
                             <label class="custom-file-label" for="productImage">Choose Image</label>
                           </div>
                           <div class="input-group-append">

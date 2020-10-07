@@ -18,6 +18,8 @@ export class ProductAddComponent implements OnInit {
   product: Product;
   productInputForm : FormGroup;
   categoryOptions : string[];
+
+  tmpFile: File;
   
   constructor(private formBuilder : FormBuilder, private networkcalling: NetworkcallingService) { }
 
@@ -40,27 +42,40 @@ export class ProductAddComponent implements OnInit {
 
   createProductInputForm() : void{
     this.productInputForm = this.formBuilder.group({
-      name: "",
+      name: "Name",
       image: "",
       categories: "",
-      description: "",
-      buyingPricePerUnit: "",
-      sellingPricePerUnit: "",
-      discountPrice: "",
-      discountTitle: "",
-      unit: "",
-      unitTitle: "",
-      quantity: "",
+      description: "Description",
+      buyingPricePerUnit: "100",
+      sellingPricePerUnit: "120",
+      discountPrice: "110",
+      discountTitle: "offer",
+      unit: "1",
+      unitTitle: "KG",
+      quantity: "80",
     });
+
+  }
+
+  productImageUploaded(event){
+    console.log(event.target.files[0]);
+    this.tmpFile = event.target.files[0];
+    // this.product.image = event.target.files[0];
+    console.log(this.tmpFile);
 
   }
 
   addProduct(){
     this.product = this.productInputForm.value;
     this.product.categories = selectedCategories;
+    // this.product.image = this.tmpFile;
     console.log(this.product);
 
-    this.networkcalling.addProductRequest(this.product).subscribe(
+    const formData = new FormData();
+
+    formData.append("image", this.tmpFile);
+
+    this.networkcalling.addProductRequest(formData).subscribe(
       data => {
           console.log("Product Respnse");
           console.log(data.data);

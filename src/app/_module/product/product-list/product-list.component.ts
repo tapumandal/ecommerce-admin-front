@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
+import { ErrorManagementService } from 'src/app/_services/error-management.service';
 import { Product } from "src/app/_model/product.model";
 
 @Component({
@@ -11,7 +12,7 @@ export class ProductListComponent implements OnInit {
 
   products: Product[];
   btnLoadingIcon = false;
-  constructor(private networkCalling : NetworkcallingService) { }
+  constructor(private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { }
 
   ngOnInit(): void {
     this.loadProductList();
@@ -23,7 +24,7 @@ export class ProductListComponent implements OnInit {
         this.products = data.data;
       },
       err => {
-        console.log(err);
+        this.errorManagement.responseFaield(err);
       }
     )
   }

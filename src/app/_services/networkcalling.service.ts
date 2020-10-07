@@ -21,7 +21,8 @@ export class NetworkcallingService {
 
   getCommonHeader(){
     let headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'application/json').set('Authorization','Bearer '+this.appStorage.getToken());
+    // headers = headers.set('Content-Type', 'application/json').set('Authorization','Bearer '+this.appStorage.getToken());
+    headers = headers.set('Authorization','Bearer '+this.appStorage.getToken());
     headers = headers.set("Access-Control-Allow-Origin", "*")
     headers = headers.set("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS")
     headers = headers.set("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With")
