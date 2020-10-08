@@ -58,23 +58,26 @@ export class ProductAddComponent implements OnInit {
   }
 
   productImageUploaded(event){
-    console.log(event.target.files[0]);
     this.tmpFile = event.target.files[0];
-    // this.product.image = event.target.files[0];
-    console.log(this.tmpFile);
 
   }
 
   addProduct(){
-    this.product = this.productInputForm.value;
-    this.product.categories = selectedCategories;
-    // this.product.image = this.tmpFile;
-    console.log(this.product);
 
     const formData = new FormData();
 
-    formData.append("image", this.tmpFile);
+    this.product = this.productInputForm.value;
 
+    for ( var key in this.product ) {
+      if(key != "image"){
+        formData.append(key, this.product[key]);
+      }
+    }
+
+    if(this.tmpFile){
+      formData.append("image", this.tmpFile);
+    }
+    
     this.networkcalling.addProductRequest(formData).subscribe(
       data => {
           console.log("Product Respnse");
