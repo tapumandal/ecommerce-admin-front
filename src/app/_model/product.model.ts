@@ -1,3 +1,5 @@
+import { Image } from "./image.model";
+
 export class Product {
     id: number
     name: string
@@ -15,4 +17,5 @@ export class Product {
     deleted: boolean
     updatedAt: string
     createdAt: string
+    productImages: Image[]
 }

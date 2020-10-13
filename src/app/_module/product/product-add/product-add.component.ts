@@ -19,7 +19,7 @@ export class ProductAddComponent implements OnInit {
   productInputForm : FormGroup;
   categoryOptions : string[];
 
-  tmpFile: File;
+  tmpFile: File[];
   
   constructor(private formBuilder : FormBuilder, private networkcalling: NetworkcallingService) { }
 
@@ -58,8 +58,9 @@ export class ProductAddComponent implements OnInit {
   }
 
   productImageUploaded(event){
-    this.tmpFile = event.target.files[0];
-
+    // this.tmpFile = event.target.files[0];
+    this.tmpFile = event.target.files;
+    console.log(this.tmpFile);
   }
 
   addProduct(){
@@ -75,8 +76,15 @@ export class ProductAddComponent implements OnInit {
     }
 
     if(this.tmpFile){
-      formData.append("image", this.tmpFile);
+      // formData.append("image", this.tmpFile);
+      let i = 0;
+      for(let file of this.tmpFile){
+        formData.append("images["+i+"]", file);
+        i++;
+      }
     }
+
+    console.log(formData.getAll);
     
     this.networkcalling.addProductRequest(formData).subscribe(
       data => {

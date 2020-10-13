@@ -12,6 +12,7 @@ export class ProductListComponent implements OnInit {
 
   products: Product[];
   btnLoadingIcon = false;
+  productImage: string;
   constructor(private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { }
 
   ngOnInit(): void {
@@ -22,6 +23,8 @@ export class ProductListComponent implements OnInit {
     this.networkCalling.getProductList().subscribe(
       data => {
         this.products = data.data;
+        console.log("Product List...")
+        console.log(this.products);
       },
       err => {
         this.errorManagement.responseFaield(err);
