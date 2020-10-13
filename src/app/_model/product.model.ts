@@ -3,7 +3,7 @@ import { Image } from "./image.model";
 export class Product {
     id: number
     name: string
-    image: File
+    image: string
     categories: string
     description: string
     buyingPricePerUnit: number
