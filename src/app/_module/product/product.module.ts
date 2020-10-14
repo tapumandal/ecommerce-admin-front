@@ -7,6 +7,7 @@ import { CategoryListComponent } from './category-list/category-list.component';
 import { ProductAddComponent } from './product-add/product-add.component';
 import { CategoryAddComponent } from './category-add/category-add.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CompanyComponent } from './company/company.component';
 
 
 @NgModule({
@@ -14,7 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ProductListComponent,
     ProductAddComponent,
     CategoryListComponent,
-    CategoryAddComponent
+    CategoryAddComponent,
+    CompanyComponent
   ],
   imports: [
     CommonModule,
