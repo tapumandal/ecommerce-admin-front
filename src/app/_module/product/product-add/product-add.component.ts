@@ -14,16 +14,18 @@ let selectedCategories = "";
 })
 export class ProductAddComponent implements OnInit {
 
+  inputFormGroup : FormGroup;
   select2plugin: Select2Plugin;
-  product: Product;
-  productInputForm : FormGroup;
   categoryOptions : string[];
 
   tmpFile: File[];
   
-  constructor(private formBuilder : FormBuilder, private networkcalling: NetworkcallingService) { }
+  constructor(private formBuilder : FormBuilder, private networkCalling: NetworkcallingService) { }
 
   ngOnInit(): void {
+    
+    this.inputFormGroup = this.formBuilder.group(new Product());
+
     bsCustomFileInput.init();
     $('.categorySelect').select2({
       theme: 'bootstrap4'
@@ -31,7 +33,6 @@ export class ProductAddComponent implements OnInit {
 
     this.categoryOptions = ['Grocery', 'Kitchen', 'Oil', 'Spices'];
 
-    this.createProductInputForm();
     
     $(".categorySelect").on("select2:select select2:unselect", function (e) {
       var items= $(this).val();
@@ -40,43 +41,16 @@ export class ProductAddComponent implements OnInit {
 
   }
 
-  createProductInputForm() : void{
-    this.productInputForm = this.formBuilder.group({
-      name: "Name",
-      image: "",
-      categories: "",
-      description: "Description",
-      buyingPricePerUnit: "100",
-      sellingPricePerUnit: "120",
-      discountPrice: "110",
-      discountTitle: "offer",
-      unit: "1",
-      unitTitle: "KG",
-      quantity: "80",
-    });
-
-  }
-
   productImageUploaded(event){
-    // this.tmpFile = event.target.files[0];
     this.tmpFile = event.target.files;
-    console.log(this.tmpFile);
   }
 
   addProduct(){
 
-    const formData = new FormData();
-
-    this.product = this.productInputForm.value;
-
-    for ( var key in this.product ) {
-      if(key != "image"){
-        formData.append(key, this.product[key]);
-      }
-    }
+    let formData = new FormData();
+    formData = this.networkCalling.prepareRequestbody(this.inputFormGroup);
 
     if(this.tmpFile){
-      // formData.append("image", this.tmpFile);
       let i = 0;
       for(let file of this.tmpFile){
         formData.append("images["+i+"]", file);
@@ -84,9 +58,9 @@ export class ProductAddComponent implements OnInit {
       }
     }
 
+    console.log("Product Request Body");
     console.log(formData.getAll);
-    
-    this.networkcalling.addProductRequest(formData).subscribe(
+    this.networkCalling.addProductRequest(formData).subscribe(
       data => {
           console.log("Product Respnse");
           console.log(data.data);

@@ -1,8 +1,8 @@
 export class Company {
-    id: string;
-    name: string;
-    active: string;
-    deleted: string;
-    createdAt: string;
-    updatedAt: string;
+    id: number = 0;
+    name: string = "";
+    active: boolean = true;
+    deleted: boolean = false;
+    createdAt: string = "";
+    updatedAt: string = "";
 }

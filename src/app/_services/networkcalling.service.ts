@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { config, Observable, throwError } from 'rxjs';
 import { Loginresponse } from '../_model/loginresponse.model';
 import { AppStorageService } from './app-storage.service';
+import { FormGroup } from '@angular/forms';
 
 
 const httpOptions = {
@@ -18,8 +19,23 @@ export class NetworkcallingService {
 
   constructor(private http : HttpClient, private appStorage: AppStorageService) { }
 
+  prepareRequestbody(formGroup: FormGroup){
+    const formData = new FormData();
+    for ( var key in formGroup.value ) {
+      formData.append(key, formGroup.value[key]);
+    }
+    return formData;
+  }
+
 
   getCommonHeader(){
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    headers = headers.set('Authorization','Bearer '+this.appStorage.getToken());
+    return headers;
+  }
+
+  getMultipartHeader(){
     let headers = new HttpHeaders();
     // headers = headers.set('Content-Type', 'application/json');
     // headers = headers.set('Content-Type', 'multipart/form-data');
@@ -46,9 +62,14 @@ export class NetworkcallingService {
     return this.http.get(BASE_URL+"product/list", {headers});
   }
 
-  addProductRequest(newProduct: any) : Observable<any>{
-    let headers = this.getCommonHeader();
-    return this.http.post(BASE_URL+"product/create", newProduct, {headers});
+  addProductRequest(body: any) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.post(BASE_URL+"product/create", body, {headers});
+  }
+
+  addCompanyRequest(body: any) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.post(BASE_URL+"company/create", body, {headers});
   }
 
 }
