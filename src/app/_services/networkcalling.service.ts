@@ -16,7 +16,7 @@ const BASE_URL = "http://127.0.0.1:8080/api/v1/";
   providedIn: 'root'
 })
 export class NetworkcallingService {
-
+  
   constructor(private http : HttpClient, private appStorage: AppStorageService) { }
 
   prepareRequestbody(formGroup: FormGroup){
@@ -56,8 +56,7 @@ export class NetworkcallingService {
     return this.http.post(BASE_URL+"registration", registrationForm, {headers});
   }
 
-  getProductList() : Observable<any>{
-    
+  getProductList() : Observable<any>{  
     let headers = this.getCommonHeader();
     return this.http.get(BASE_URL+"product/list", {headers});
   }
@@ -72,4 +71,18 @@ export class NetworkcallingService {
     return this.http.post(BASE_URL+"company/create", body, {headers});
   }
 
+  getCompanyList() : Observable<any> {
+    let headers = this.getCommonHeader();
+    return this.http.get(BASE_URL+"company/list", {headers});
+  }
+
+  updateCompanyRequest(body: any) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.post(BASE_URL+"company/update", body, {headers});
+  }
+
+  deleteCompanyRequest(id: number) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.delete(BASE_URL+"company/"+id, {headers});
+  }
 }
