@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { Company } from "src/app/_model/company.model";
 import { ErrorManagementService } from 'src/app/_services/error-management.service';
@@ -17,65 +17,51 @@ export class CompanyComponent implements OnInit {
   inputFormGroup: FormGroup;
   
 
-  myForm: FormGroup;
-  scheduleDetail: FormArray;
+  prio=[0,1,2];
+  itemListForm:any;
 
-  constructor(private formBuilder: FormBuilder, private networkCalling: NetworkcallingService, private errorManagement: ErrorManagementService) { 
-    
-  }
+  constructor(private formBuilder: FormBuilder, private networkCalling: NetworkcallingService, private errorManagement: ErrorManagementService) { }
 
   ngOnInit(): void {
-    this.loadCompanyList();
+    this.loadEntityList();
     this.inputFormGroup = this.formBuilder.group(new Company());
 
-    this.myForm = this.formBuilder.group({
-      scheduleDetail: this.formBuilder.array([])
-     })
+    this.itemListForm=new FormGroup({
+      items:new FormArray([])
+    })
+  }
+
+  submit(){
+    // this.serv.setMyData(this.itemListForm.value.items);
+  }
+
+  getMyData(){
+
+    let data = this.companys;
+
+    if(data.length > 0){
+      for(let x in data){
+        this.itemListForm.get('items').push(new FormGroup({
+          id:new FormControl(data[x].id,[Validators.required]),
+          name:new FormControl(data[x].name,[Validators.required]),
+          active:new FormControl(data[x].active,[Validators.required])
+        }))
+      }
+    }
   }
 
 
+  track(item:any,index:number){
+    return index;
+  }
 
-  addRow(){
-    // This function instantiates a FormGroup for each day
-    // and pushes it to our FormArray
-
-    // We get our FormArray
-    const control = <FormArray>this.myForm.controls['scheduleDetail'];
-
-    // instantiate a new day FormGroup;
-    newDayGroup: FormGroup;
-    let newDayGroup = this.initItems();
-
-    // Add it to our formArray
-    control.push(newDayGroup);
-}
-
-initItems(): FormGroup{
-    // Here, we make the form for each day
-
-    return this.formBuilder.group(new Company);
-}
-
-submit(){
-    // do stuff and submit result
-    console.log(this.myForm.value);
-}
-
-
-
-
-
-
-
-
-
-
-  loadCompanyList(){
+  loadEntityList(){
     this.networkCalling.getCompanyList().subscribe(
       data => {
         this.companys = data.data;
         console.log("Companys List...")
         console.log(this.companys);
+        this.getMyData();
       },
       err => {
         this.errorManagement.responseFaield(err);
@@ -83,11 +69,41 @@ submit(){
     )
   }
 
-  updateCompany(id: number){
-    console.log(id);
+  updateEntity(i: number){
+    console.log(this.itemListForm.get('items').value[i]);
+
+    this.networkCalling.updateCompanyRequest(this.itemListForm.get('items').value[i]).subscribe(
+      data => {
+        console.log("Update Company Respnse");
+        console.log(data.data);
+      },
+      err => {
+        console.log("Update Company Respnse Failed");
+        console.log(err);
+      }
+    );
+  }
+  
+  deleteEntity(i:number){
+    console.log(i);
+    console.log(this.itemListForm.get('items').value);
+    console.log(this.itemListForm.get('items').value[i]);
+    console.log(this.itemListForm.get('items').value[i].id);
+    this.networkCalling.deleteCompanyRequest(this.itemListForm.get('items').value[i].id).subscribe(
+      data => {
+        
+        this.itemListForm.get('items').removeAt(i);
+        console.log("Update Company Respnse");
+        console.log(data.data);
+      },
+      err => {
+        console.log("Update Company Respnse Failed");
+        console.log(err);
+      }
+    );
   }
 
-  addCompany(){
+  createEntity(){
     this.btnLoadingIcon = true;
 
     let formData = new FormData();
@@ -95,11 +111,22 @@ submit(){
 
     this.networkCalling.addCompanyRequest(formData).subscribe(
       data => {
-          console.log("Company Respnse");
+          console.log("Create Company Respnse");
           console.log(data.data);
+
+          let companyTmp = data.data;
+          console.log(companyTmp);
+
+          this.itemListForm.get('items').insert(0,new FormGroup({
+            id:new FormControl(companyTmp.id,[Validators.required]),
+            name:new FormControl(companyTmp.name,[Validators.required]),
+            active:new FormControl(companyTmp.active,[Validators.required])
+          }));
+            
+
       },
       err => {
-        console.log("Company Respnse Failed");
+        console.log("Create Company Respnse Failed");
         console.log(err);
       }
     );
