@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { Company } from "src/app/_model/company.model";
+import { Category } from "src/app/_model/category.model";
 import { ErrorManagementService } from 'src/app/_services/error-management.service';
 import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
 
 @Component({
-  selector: 'app-company',
-  templateUrl: './company.component.html',
-  styleUrls: ['./company.component.css']
+  selector: 'app-category',
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.css']
 })
-export class CompanyComponent implements OnInit {
+export class CategoryComponent implements OnInit {
   
   btnLoadingIcon = false;
-  companys: Company[];
+  categorys: Category[];
   inputFormGroup: FormGroup;
   
 
@@ -24,7 +24,7 @@ export class CompanyComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadEntityList();
-    this.inputFormGroup = this.formBuilder.group(new Company());
+    this.inputFormGroup = this.formBuilder.group(new Category());
 
     this.itemListForm=new FormGroup({
       items:new FormArray([])
@@ -37,7 +37,7 @@ export class CompanyComponent implements OnInit {
 
   getMyData(){
 
-    let data = this.companys;
+    let data = this.categorys;
 
     if(data.length > 0){
       for(let x in data){
@@ -56,11 +56,11 @@ export class CompanyComponent implements OnInit {
   }
 
   loadEntityList(){
-    this.networkCalling.getCompanyList().subscribe(
+    this.networkCalling.getCategoryList().subscribe(
       data => {
-        this.companys = data.data;
-        console.log("Companys List...")
-        console.log(this.companys);
+        this.categorys = data.data;
+        console.log("Categorys List...")
+        console.log(this.categorys);
         this.getMyData();
       },
       err => {
@@ -72,13 +72,13 @@ export class CompanyComponent implements OnInit {
   updateEntity(i: number){
     console.log(this.itemListForm.get('items').value[i]);
 
-    this.networkCalling.updateCompanyRequest(this.itemListForm.get('items').value[i]).subscribe(
+    this.networkCalling.updateCategoryRequest(this.itemListForm.get('items').value[i]).subscribe(
       data => {
-        console.log("Update Company Respnse");
+        console.log("Update Category Respnse");
         console.log(data.data);
       },
       err => {
-        console.log("Update Company Respnse Failed");
+        console.log("Update Category Respnse Failed");
         console.log(err);
       }
     );
@@ -89,15 +89,15 @@ export class CompanyComponent implements OnInit {
     console.log(this.itemListForm.get('items').value);
     console.log(this.itemListForm.get('items').value[i]);
     console.log(this.itemListForm.get('items').value[i].id);
-    this.networkCalling.deleteCompanyRequest(this.itemListForm.get('items').value[i].id).subscribe(
+    this.networkCalling.deleteCategoryRequest(this.itemListForm.get('items').value[i].id).subscribe(
       data => {
         
         this.itemListForm.get('items').removeAt(i);
-        console.log("Update Company Respnse");
+        console.log("Update Category Respnse");
         console.log(data.data);
       },
       err => {
-        console.log("Update Company Respnse Failed");
+        console.log("Update Category Respnse Failed");
         console.log(err);
       }
     );
@@ -109,25 +109,25 @@ export class CompanyComponent implements OnInit {
     let formData = new FormData();
     formData = this.networkCalling.prepareRequestbody(this.inputFormGroup);
 
-    this.networkCalling.addCompanyRequest(formData).subscribe(
+    this.networkCalling.addCategoryRequest(formData).subscribe(
       data => {
-          console.log("Create Company Respnse");
+          console.log("Create Category Respnse");
           console.log(data.data);
 
-          let companyTmp = data.data;
-          console.log(companyTmp);
+          let categoryTmp = data.data;
+          console.log(categoryTmp);
 
           this.itemListForm.get('items').insert(0,new FormGroup({
-            id:new FormControl(companyTmp.id,[Validators.required]),
-            name:new FormControl(companyTmp.name,[Validators.required]),
-            active:new FormControl(companyTmp.active,[Validators.required])
+            id:new FormControl(categoryTmp.id,[Validators.required]),
+            name:new FormControl(categoryTmp.name,[Validators.required]),
+            active:new FormControl(categoryTmp.active,[Validators.required])
           }));
           
           this.btnLoadingIcon = false;
 
       },
       err => {
-        console.log("Create Company Respnse Failed");
+        console.log("Create Category Respnse Failed");
         console.log(err);
       }
     );

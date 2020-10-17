@@ -66,23 +66,42 @@ export class NetworkcallingService {
     return this.http.post(BASE_URL+"product/create", body, {headers});
   }
 
+  // COMPANY API CALLING
+
   addCompanyRequest(body: any) : Observable<any>{
     let headers = this.getMultipartHeader();
     return this.http.post(BASE_URL+"company/create", body, {headers});
   }
-
   getCompanyList() : Observable<any> {
     let headers = this.getCommonHeader();
     return this.http.get(BASE_URL+"company/list", {headers});
   }
-
   updateCompanyRequest(body: any) : Observable<any>{
     let headers = this.getMultipartHeader();
     return this.http.post(BASE_URL+"company/update", body, {headers});
   }
-
   deleteCompanyRequest(id: number) : Observable<any>{
     let headers = this.getMultipartHeader();
     return this.http.delete(BASE_URL+"company/"+id, {headers});
+  }
+
+
+  // Category API CALLING
+
+  addCategoryRequest(body: any) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.post(BASE_URL+"category/create", body, {headers});
+  }
+  getCategoryList() : Observable<any> {
+    let headers = this.getCommonHeader();
+    return this.http.get(BASE_URL+"category/list", {headers});
+  }
+  updateCategoryRequest(body: any) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.post(BASE_URL+"category/update", body, {headers});
+  }
+  deleteCategoryRequest(id: number) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.delete(BASE_URL+"category/"+id, {headers});
   }
 }
