@@ -21,7 +21,7 @@
             <div class="row">
                 <div class="col-md-4"></div>
                 <div class="col-md-4">
-                    <form [formGroup]="inputFormGroup"  (ngSubmit)="addCompany()">
+                    <form [formGroup]="inputFormGroup"  (ngSubmit)="createEntity()">
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
@@ -46,7 +46,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-          <h3 class="card-title">Projects</h3>
+          <h3 class="card-title">Company List</h3>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip" title="Collapse">
@@ -56,26 +56,38 @@
           </div>
         </div>
         <div class="card-body p-0">
-         
-
-            <form [formGroup]="myForm" *ngIf="myForm">
-                  <table formArrayName="scheduleDetail">
-            
-                        <tr *ngFor="let item of myForm.controls.scheduleDetail.controls; let i=index"
-                            [formGroupName]="i" >
-            
-                            <td><input type='text' formControlName="id"></td>
-                            <td><input type='text' formControlName="name"></td>
-                            <td><input type='text' formControlName="active"></td>
-                            <td><input type='text' formControlName="delete"></td>
-            
-                        </tr>
-            
+          <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+          
+              <form class="form-group" [formGroup]="itemListForm">
+                <div formArrayName="items">
+                  <table class="table table-striped projects">
+                    <tr>
+                      <th>No</th>
+                      <th>Companies</th>
+                      <th>Active</th>
+                      <th>Action</th>
+                    </tr>
+                    <tr *ngFor="let x of itemListForm.get('items').controls; let i=index; trackBy:track" [formGroupName]="i">
+                      <td>{{ i+1 }}</td>
+                      <td><input class="form-control" formControlName="name"></td>
+                      <td>
+                        <input hidden type="number" formControlName="id">
+                        <input class="form-control" type="checkbox" formControlName="active">
+                      </td>
+                      <td>
+                        <button class="btn btn-primary" (click)="updateEntity(i)">Update</button>
+                        <button style="margin-left: 10px;" class="btn btn-danger" (click)="deleteEntity(i)">Delete</button>
+                      </td>
+                    </tr>
                   </table>
-            </form>
-            
-            <button (click)="addRow()">Add new item</button>
-            <button (click)="submit()" [disabled]="!myForm.valid">Submit</button>
+                </div>
+              </form>
+              
+            </div>
+
+          </div>
         </div>
         <!-- /.card-body -->
       </div>
