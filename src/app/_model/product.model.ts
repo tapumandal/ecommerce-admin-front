@@ -4,6 +4,7 @@ export class Product {
     id: number = 0;
     name: string = "";
     image: string = "";
+    company: string = "";
     categories: string = "";
     description: string = "";
     buyingPricePerUnit: number = 0;

@@ -1,21 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import bsCustomFileInput from 'bs-custom-file-input';
-import { Select2Plugin } from "select2";
-import { Product } from 'src/app/_model/product.model';
-import { FormGroup, FormBuilder } from "@angular/forms";
-import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
-import { ErrorManagementService } from 'src/app/_services/error-management.service';
-
-let selectedCategories = "";
 
 @Component({
-  selector: 'app-product-add',
-  templateUrl: './product-add.component.html',
-  styleUrls: ['./product-add.component.css']
+  selector: 'app-porduct-details',
+  templateUrl: './porduct-details.component.html',
+  styleUrls: ['./porduct-details.component.css']
 })
-export class ProductAddComponent implements OnInit {
+export class PorductDetailsComponent implements OnInit {
 
-  inputFormGroup : FormGroup;
+  cinputFormGroup : FormGroup;
   select2plugin: Select2Plugin;
   categoryOptions : string[];
   companies : string[];
@@ -104,5 +96,4 @@ export class ProductAddComponent implements OnInit {
       }
     )
   }
-
 }

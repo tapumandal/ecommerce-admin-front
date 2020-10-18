@@ -5,6 +5,7 @@ import { AuthGuardGuard } from 'src/app/_services/auth-guard.guard';
 import { BusinessComponent } from "../business/business.component";
 import { CategoryComponent } from './category/category.component';
 import { CompanyComponent } from './company/company.component';
+import { PorductDetailsComponent } from './porduct-details/porduct-details.component';
 import { ProductAddComponent } from './product-add/product-add.component';
 import { ProductListComponent } from './product-list/product-list.component';
 
@@ -16,6 +17,7 @@ const routes: Routes = [
       {path: "product/add", component: ProductAddComponent},
       {path: "product/company", component: CompanyComponent},
       {path: "product/category", component: CategoryComponent},
+      {path: "product/:id", component: PorductDetailsComponent},
     ]
   }
 ];
