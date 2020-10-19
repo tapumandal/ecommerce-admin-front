@@ -1,4 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import bsCustomFileInput from 'bs-custom-file-input';
+import { Select2Plugin } from 'select2';
+import { Product } from 'src/app/_model/product.model';
+import { ErrorManagementService } from 'src/app/_services/error-management.service';
+import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
+
+let selectedCategories = "";
 
 @Component({
   selector: 'app-porduct-details',
@@ -7,45 +16,68 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PorductDetailsComponent implements OnInit {
 
-  cinputFormGroup : FormGroup;
+  inputFormGroup : FormGroup;
   select2plugin: Select2Plugin;
   categoryOptions : string[];
+  categorySelected : string[];
   companies : string[];
   tmpFile: File[];
+  product: Product;
+  productId: string;
   
-  constructor(private formBuilder : FormBuilder, private networkCalling: NetworkcallingService, private errorManagement: ErrorManagementService) { }
+  constructor(private route: ActivatedRoute, private formBuilder : FormBuilder, private networkCalling: NetworkcallingService, private errorManagement: ErrorManagementService) { 
+    this.productId = this.route.snapshot.paramMap.get('id');
+  }
 
   ngOnInit(): void {
-    
+    this.product = new Product();
     this.companies = [];
     this.categoryOptions = [];
+    this.categorySelected = [];
+    this.inputFormGroup = this.formBuilder.group(this.product);
 
-    this.inputFormGroup = this.formBuilder.group(new Product());
+    this.getProductById();
 
     bsCustomFileInput.init();
     $('.categorySelect').select2({
       theme: 'bootstrap4'
     });
-
     
-
+    this.product.name = "product Name X";
+    this.product.description = "Description X";
     
     $(".categorySelect").on("select2:select select2:unselect", function (e) {
       var items= $(this).val();
       selectedCategories = items.toLocaleString().valueOf().trim();
-    })
+    });
 
     this.loadCompanyList();
     this.loadCategoryList();
-
   }
 
   productImageUploaded(event){
     this.tmpFile = event.target.files;
   }
 
+  getProductById(){
+    this.networkCalling.getProductById(this.productId).subscribe(
+      data => {
+        this.product = data.data;
+        console.log(this.product);
+        this.product.image = "";
+        let tmpCategories = [];
+        tmpCategories = this.product.categories.split(",");
+        this.inputFormGroup.patchValue(this.product);
+
+      },
+      err => {
+        this.errorManagement.responseFaield(err);
+      }
+    )
+  }
+
   addProduct(){
-    this.inputFormGroup.controls.categories.setValue(selectedCategories.toLowerCase());
+    this.inputFormGroup.controls.categories.setValue(selectedCategories);
 
     let formData = new FormData();
     formData = this.networkCalling.prepareRequestbody(this.inputFormGroup);

@@ -53,7 +53,7 @@ export class ProductAddComponent implements OnInit {
   }
 
   addProduct(){
-    this.inputFormGroup.controls.categories.setValue(selectedCategories.toLowerCase());
+    this.inputFormGroup.controls.categories.setValue(selectedCategories);
 
     let formData = new FormData();
     formData = this.networkCalling.prepareRequestbody(this.inputFormGroup);

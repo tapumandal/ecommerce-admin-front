@@ -72,9 +72,9 @@
                     <div class="col-md-9"><!-- /.form-group -->
                       <div class="form-group">
                         <label>Categories</label>
-                        <select formControlName="categories"   class="categorySelect" multiple="multiple" data-placeholder="Select categories" style="width: 100%;" autocomplete="off">
+                        <select formControlName="categories"  class="categorySelect" multiple="multiple" data-placeholder="Select categories" style="width: 100%;" autocomplete="off">
                           <!-- <option *ngFor="let category of categories">{{ category }}</option> -->
-                          <option *ngFor="let option of categoryOptions" >{{ option }}</option>
+                          <option *ngFor="let option of categoryOptions" [value]="option" selected="selected">{{ option }}</option>
                         </select>
                       </div>
                     </div>

@@ -56,6 +56,11 @@ export class NetworkcallingService {
     return this.http.post(BASE_URL+"registration", registrationForm, {headers});
   }
 
+  getProductById(id : string) : Observable<any>{  
+    let headers = this.getCommonHeader();
+    return this.http.get(BASE_URL+"product/"+id, {headers});
+  }
+
   getProductList() : Observable<any>{  
     let headers = this.getCommonHeader();
     return this.http.get(BASE_URL+"product/list", {headers});
