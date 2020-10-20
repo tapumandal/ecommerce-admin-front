@@ -6,6 +6,7 @@ export class Product {
     image: string = "";
     company: string = "";
     categories: string = "";
+    preSelectedCategories: string[] = [];
     description: string = "";
     buyingPricePerUnit: number = 0;
     sellingPricePerUnit: number = 0;

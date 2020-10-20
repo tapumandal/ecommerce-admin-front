@@ -25,7 +25,7 @@
           </div>
           <div class="col-md-8">
             <!-- *ngIf="productInputForm" -->
-            <form [formGroup]="inputFormGroup"  (ngSubmit)="addProduct()">
+            <form [formGroup]="inputFormGroup"  (ngSubmit)="updateProduct()">
               <div class="card card-default">
                 <div class="card-header">
                   <h3 class="card-title">Product input from</h3>
@@ -69,13 +69,19 @@
                       </div>
                     </div>
                     
-                    <div class="col-md-9"><!-- /.form-group -->
+                    <!-- <div class="col-md-9">
                       <div class="form-group">
                         <label>Categories</label>
                         <select formControlName="categories"  class="categorySelect" multiple="multiple" data-placeholder="Select categories" style="width: 100%;" autocomplete="off">
-                          <!-- <option *ngFor="let category of categories">{{ category }}</option> -->
                           <option *ngFor="let option of categoryOptions" [value]="option" selected="selected">{{ option }}</option>
                         </select>
+                      </div>
+                    </div> -->
+                    
+                    <div class="col-md-9">
+                      <div class="form-group">
+                        <label>Categories</label>
+                        <ng-select2 [data]="categoryOptions" [options]="options" [width]="500" formControlName="preSelectedCategories"></ng-select2>
                       </div>
                     </div>
 

@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import bsCustomFileInput from 'bs-custom-file-input';
-import { Select2Plugin } from 'select2';
+import { Select2OptionData } from 'ng-select2';
+import { Options, Select2Plugin } from 'select2';
 import { Product } from 'src/app/_model/product.model';
 import { ErrorManagementService } from 'src/app/_services/error-management.service';
 import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
@@ -18,8 +19,11 @@ export class PorductDetailsComponent implements OnInit {
 
   inputFormGroup : FormGroup;
   select2plugin: Select2Plugin;
-  categoryOptions : string[];
+
+  categoryOptions : Array<Select2OptionData>;
   categorySelected : string[];
+  options: Options;
+  
   companies : string[];
   tmpFile: File[];
   product: Product;
@@ -30,29 +34,32 @@ export class PorductDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.categoryOptions = [];
+  
+    this.options = {
+      width: '300',
+      multiple: true,
+      tags: true,
+      theme: 'bootstrap4'
+    };
+
+
+
+
     this.product = new Product();
     this.companies = [];
-    this.categoryOptions = [];
     this.categorySelected = [];
     this.inputFormGroup = this.formBuilder.group(this.product);
 
     this.getProductById();
-
-    bsCustomFileInput.init();
-    $('.categorySelect').select2({
-      theme: 'bootstrap4'
-    });
     
-    this.product.name = "product Name X";
-    this.product.description = "Description X";
-    
-    $(".categorySelect").on("select2:select select2:unselect", function (e) {
-      var items= $(this).val();
-      selectedCategories = items.toLocaleString().valueOf().trim();
-    });
+    // $(".categorySelect").on("select2:select select2:unselect", function (e) {
+    //   var items= $(this).val();
+    //   selectedCategories = items.toLocaleString().valueOf().trim();
+    // });
 
     this.loadCompanyList();
-    this.loadCategoryList();
+    this.loadCategoryList();    
   }
 
   productImageUploaded(event){
@@ -64,9 +71,9 @@ export class PorductDetailsComponent implements OnInit {
       data => {
         this.product = data.data;
         console.log(this.product);
+
         this.product.image = "";
-        let tmpCategories = [];
-        tmpCategories = this.product.categories.split(",");
+        this.product.preSelectedCategories = this.product.categories.split(",");
         this.inputFormGroup.patchValue(this.product);
 
       },
@@ -76,9 +83,9 @@ export class PorductDetailsComponent implements OnInit {
     )
   }
 
-  addProduct(){
-    this.inputFormGroup.controls.categories.setValue(selectedCategories);
-
+  updateProduct(){
+    this.inputFormGroup.controls.categories.setValue(this.inputFormGroup.controls.preSelectedCategories.value.toString());
+    console.log(this.inputFormGroup);
     let formData = new FormData();
     formData = this.networkCalling.prepareRequestbody(this.inputFormGroup);
 
@@ -90,9 +97,9 @@ export class PorductDetailsComponent implements OnInit {
       }
     }
 
-    this.networkCalling.addProductRequest(formData).subscribe(
+    this.networkCalling.updateProductRequest(formData).subscribe(
       data => {
-          console.log("Product Respnse");
+          console.log("Product Update Respnse");
           console.log(data.data);
       },
       err => {
@@ -119,9 +126,15 @@ export class PorductDetailsComponent implements OnInit {
   loadCategoryList(){
     this.networkCalling.getCategoryList().subscribe(
       data => {
+        
+        this.categoryOptions = []
         data.data.forEach(element => {
-          this.categoryOptions.push(element.name);
+          this.categoryOptions.push({
+            id: element.name,
+            text: element.name
+          });
         });
+        
       },
       err => {
         this.errorManagement.responseFaield(err);

@@ -71,6 +71,11 @@ export class NetworkcallingService {
     return this.http.post(BASE_URL+"product/create", body, {headers});
   }
 
+  updateProductRequest(body: any) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.post(BASE_URL+"product/update", body, {headers});
+  }
+
   // COMPANY API CALLING
 
   addCompanyRequest(body: any) : Observable<any>{

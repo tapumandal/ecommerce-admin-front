@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthModule } from "./_module/auth/auth.module";
 import { BusinessModule } from "src/app/_module/business/business.module";
 import { ProductModule } from "src/app/_module/product/product.module";
+import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ProductModule } from "src/app/_module/product/product.module";
     AppRoutingModule,
     AuthModule,
     BusinessModule,
-    ProductModule
+    ProductModule,
+    NgSelect2Module
   ],
   providers: [],
   bootstrap: [AppComponent]
