@@ -4,6 +4,7 @@ import { Select2Plugin } from "select2";
 import { Product } from 'src/app/_model/product.model';
 import { FormGroup, FormBuilder } from "@angular/forms";
 import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
+import { ErrorManagementService } from 'src/app/_services/error-management.service';
 
 let selectedCategories = "";
 
@@ -17,13 +18,16 @@ export class ProductAddComponent implements OnInit {
   inputFormGroup : FormGroup;
   select2plugin: Select2Plugin;
   categoryOptions : string[];
-
+  companies : string[];
   tmpFile: File[];
   
-  constructor(private formBuilder : FormBuilder, private networkCalling: NetworkcallingService) { }
+  constructor(private formBuilder : FormBuilder, private networkCalling: NetworkcallingService, private errorManagement: ErrorManagementService) { }
 
   ngOnInit(): void {
     
+    this.companies = [];
+    this.categoryOptions = [];
+
     this.inputFormGroup = this.formBuilder.group(new Product());
 
     bsCustomFileInput.init();
@@ -31,13 +35,16 @@ export class ProductAddComponent implements OnInit {
       theme: 'bootstrap4'
     });
 
-    this.categoryOptions = ['Grocery', 'Kitchen', 'Oil', 'Spices'];
+    
 
     
     $(".categorySelect").on("select2:select select2:unselect", function (e) {
       var items= $(this).val();
       selectedCategories = items.toLocaleString().valueOf().trim();
     })
+
+    this.loadCompanyList();
+    this.loadCategoryList();
 
   }
 
@@ -46,6 +53,7 @@ export class ProductAddComponent implements OnInit {
   }
 
   addProduct(){
+    this.inputFormGroup.controls.categories.setValue(selectedCategories);
 
     let formData = new FormData();
     formData = this.networkCalling.prepareRequestbody(this.inputFormGroup);
@@ -58,8 +66,6 @@ export class ProductAddComponent implements OnInit {
       }
     }
 
-    console.log("Product Request Body");
-    console.log(formData.getAll);
     this.networkCalling.addProductRequest(formData).subscribe(
       data => {
           console.log("Product Respnse");
@@ -70,6 +76,33 @@ export class ProductAddComponent implements OnInit {
         console.log(err);
       }
     );
+  }
+
+  loadCompanyList(){
+    this.networkCalling.getCompanyList().subscribe(
+      data => {
+        data.data.forEach(element => {
+          this.companies.push(element.name);
+        });
+
+      },
+      err => {
+        this.errorManagement.responseFaield(err);
+      }
+    )
+  }
+
+  loadCategoryList(){
+    this.networkCalling.getCategoryList().subscribe(
+      data => {
+        data.data.forEach(element => {
+          this.categoryOptions.push(element.name);
+        });
+      },
+      err => {
+        this.errorManagement.responseFaield(err);
+      }
+    )
   }
 
 }

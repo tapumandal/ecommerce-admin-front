@@ -20,7 +20,9 @@
     "@angular/platform-browser-dynamic": "~10.0.14",
     "@angular/router": "~10.0.14",
     "admin-lte": "^3.0.5",
+    "ng-select2": "^1.2.3",
     "rxjs": "~6.5.5",
+    "select2": "^4.0.13",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },

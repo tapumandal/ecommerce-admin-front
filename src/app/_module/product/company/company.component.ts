@@ -85,10 +85,6 @@ export class CompanyComponent implements OnInit {
   }
   
   deleteEntity(i:number){
-    console.log(i);
-    console.log(this.itemListForm.get('items').value);
-    console.log(this.itemListForm.get('items').value[i]);
-    console.log(this.itemListForm.get('items').value[i].id);
     this.networkCalling.deleteCompanyRequest(this.itemListForm.get('items').value[i].id).subscribe(
       data => {
         
