@@ -8,6 +8,7 @@ import { HomeComponent } from './home/home.component';
 import { AuthModule } from "./_module/auth/auth.module";
 import { BusinessModule } from "src/app/_module/business/business.module";
 import { ProductModule } from "src/app/_module/product/product.module";
+import { SettingsModule } from "src/app/_module/settings/settings.module";
 import { NgSelect2Module } from 'ng-select2';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { NgSelect2Module } from 'ng-select2';
     AuthModule,
     BusinessModule,
     ProductModule,
-    NgSelect2Module
+    NgSelect2Module,
+    SettingsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
