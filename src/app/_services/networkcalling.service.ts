@@ -114,4 +114,15 @@ export class NetworkcallingService {
     let headers = this.getMultipartHeader();
     return this.http.delete(BASE_URL+"category/"+id, {headers});
   }
+
+  // Navigation
+  
+  getNavigation() : Observable<any> {
+    let headers = this.getCommonHeader();
+    return this.http.get(BASE_URL+"navigation/get", {headers});
+  }
+  addNavigationRequest(body: any) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.post(BASE_URL+"navigation/create", body, {headers});
+  }
 }
