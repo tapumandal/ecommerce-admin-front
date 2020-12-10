@@ -1,3 +1,5 @@
+import { CartProduct } from "./cart-product.model";
+
 export class Cart {
     id: number;
     userId: number;
@@ -15,4 +17,5 @@ export class Cart {
     totalProductPrice: number;
     totalDiscount: number;
     totalPayable: number;
+    productList: CartProduct[];
 }

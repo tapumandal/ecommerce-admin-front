@@ -125,4 +125,11 @@ export class NetworkcallingService {
     let headers = this.getMultipartHeader();
     return this.http.post(BASE_URL+"navigation/create", body, {headers});
   }
+
+  // Cart Start
+  getCartList() : Observable<any>{  
+    let headers = this.getCommonHeader();
+    return this.http.get(BASE_URL+"cart/consumer/list", {headers});
+  }
+  // Cart End
 }
