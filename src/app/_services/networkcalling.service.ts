@@ -10,7 +10,7 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const BASE_URL = "http://127.0.0.1:8080/api/v1/";
+const BASE_URL = "http://127.0.0.1:8081/api/v1/";
 
 @Injectable({
   providedIn: 'root'
