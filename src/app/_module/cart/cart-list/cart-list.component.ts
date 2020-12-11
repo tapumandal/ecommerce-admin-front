@@ -4,6 +4,7 @@ import { ErrorManagementService } from 'src/app/_services/error-management.servi
 import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
 import { Cart } from 'src/app/_model/cart.model';
 import { Pagination } from 'src/app/_model/pagination.model';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -16,8 +17,19 @@ export class CartListComponent implements OnInit {
   carts: Cart[];
   pagination: Pagination;
   collection: number[];
+  pageNumber: any;
+  pageSize: any;
+  selectedItem: any;
 
-  constructor(private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { }
+  constructor(private route: ActivatedRoute, private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { 
+    this.pageNumber = this.route.snapshot.paramMap.get('page');
+    this.pageSize = this.route.snapshot.paramMap.get('size');
+    if(this.pageNumber == null) this.pageNumber = 1;
+    if(this.pageSize == null) this.pageSize = 10;
+
+    this.selectedItem = this.pageNumber;
+    console.log(this.selectedItem);
+  }
 
   ngOnInit(): void {
     this.loadCartList();
@@ -29,17 +41,23 @@ export class CartListComponent implements OnInit {
   }
 
   loadCartList() {
-    this.networkCalling.getCartList().subscribe(
+    this.networkCalling.getCartList(this.pageNumber, this.pageSize).subscribe(
       data => {
         this.carts = data.data;
         this.pagination = data.myPagenation;
         console.log(this.pagination);
-        this.collection = Array(this.pagination.totalElement).fill(this.pagination.totalElement).map((x,i)=>i+1);
+        this.collection = Array(5).fill(this.pagination.totalElement).map((x,i)=>i+1);
+        this.selectedItem = this.pageNumber;
       },
       err => {
         this.errorManagement.responseFaield(err);
       }
     )
+  }
+
+  paginationBtnClicked($event, numberOfBtn){
+    console.log(numberOfBtn);
+    console.log($event);
   }
 
 }

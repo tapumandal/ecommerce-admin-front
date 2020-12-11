@@ -127,9 +127,9 @@ export class NetworkcallingService {
   }
 
   // Cart Start
-  getCartList() : Observable<any>{  
+  getCartList(pageNumber: any, pageSize: any) : Observable<any>{  
     let headers = this.getCommonHeader();
-    return this.http.get(BASE_URL+"cart/consumer/list", {headers});
+    return this.http.get(BASE_URL+"cart/consumer/list?page="+pageNumber+"&size="+pageSize, {headers});
   }
   // Cart End
 }

@@ -10,6 +10,7 @@ const routes: Routes = [
     path: "", component: BusinessComponent, canActivateChild: [AuthGuardGuard],
     children:[
       {path: "cart/list", component: CartListComponent},
+      {path: "cart/:size/list/:page", component: CartListComponent},
       {path: "cart/update", component: CartUpdateComponent}
     ]
   }
