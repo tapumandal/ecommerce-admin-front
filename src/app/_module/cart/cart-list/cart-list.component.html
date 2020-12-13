@@ -126,12 +126,12 @@
                 <a routerLink="pagination.previousPageUrl" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
               </li>
 
-              <li *ngFor="let inc of collection;" [ngClass]="{'active': selectedItem === inc}" (click)='selectedItem = inc;' class="paginate_button page-item" (click)="paginationBtnClicked($event, inc)">
+              <li *ngFor="let inc of collection;" [ngClass]="{'active': selectedItem === inc}" [ngClass]="{'active': inc == routePageNum}" (click)='selectedItem = inc;' class="paginate_button page-item" (click)="paginationBtnClicked($event, inc)">
                 <a [routerLink]="['/cart',pageSize,'list', inc ]" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">{{ inc }}</a>
               </li>
 
-              <li ng-if="pagination.nextPageUrl != null" class="paginate_button page-item next" id="example2_next">
-                <a routerLink=pagination.nextPageUrl aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+              <li  class="paginate_button page-item next" id="example2_next">
+                <a [routerLink]="['/cart',pageSize,'list', ((routePageNum*1)+(1*1)) ]" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
               </li>
             </ul>
           </div>

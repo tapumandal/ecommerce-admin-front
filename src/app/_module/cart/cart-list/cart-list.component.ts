@@ -20,9 +20,11 @@ export class CartListComponent implements OnInit {
   pageNumber: any;
   pageSize: any;
   selectedItem: any;
+  routePageNum: any;
 
   constructor(private route: ActivatedRoute, private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { 
     this.pageNumber = this.route.snapshot.paramMap.get('page');
+    this.routePageNum = this.pageNumber;
     this.pageSize = this.route.snapshot.paramMap.get('size');
     if(this.pageNumber == null) this.pageNumber = 1;
     if(this.pageSize == null) this.pageSize = 10;
@@ -45,9 +47,7 @@ export class CartListComponent implements OnInit {
       data => {
         this.carts = data.data;
         this.pagination = data.myPagenation;
-        console.log(this.pagination);
-        this.collection = Array(5).fill(this.pagination.totalElement).map((x,i)=>i+1);
-        this.selectedItem = this.pageNumber;
+        this.myPagination();
       },
       err => {
         this.errorManagement.responseFaield(err);
@@ -55,9 +55,26 @@ export class CartListComponent implements OnInit {
     )
   }
 
+  myPagination(){
+    console.log(this.pagination);
+    let startPage = 0;
+    let pageLimit = 5;
+    if(pageLimit>this.pagination.totalPage){
+      pageLimit = this.pagination.totalPage;
+    }
+    if(this.pageNumber>3){
+      startPage = this.pageNumber-3;
+      if((startPage+pageLimit)>this.pagination.totalPage){
+        startPage=this.pagination.totalPage-pageLimit;
+      }
+    }
+    this.collection = Array(pageLimit).fill(this.pagination.totalPage).map((x,i)=>i+startPage+1);
+    this.selectedItem = this.pageNumber;
+  }
+
   paginationBtnClicked($event, numberOfBtn){
-    console.log(numberOfBtn);
-    console.log($event);
+    this.pageNumber = numberOfBtn;
+    this.loadCartList();
   }
 
 }
