@@ -17,20 +17,15 @@ export class CartListComponent implements OnInit {
   carts: Cart[];
   pagination: Pagination;
   collection: number[];
-  pageNumber: any;
+  currentPageNumber: any;
+  totalNumberOfPage: any;
   pageSize: any;
-  selectedItem: any;
-  routePageNum: any;
 
   constructor(private route: ActivatedRoute, private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { 
-    this.pageNumber = this.route.snapshot.paramMap.get('page');
-    this.routePageNum = this.pageNumber;
+    this.currentPageNumber = this.route.snapshot.paramMap.get('page');
     this.pageSize = this.route.snapshot.paramMap.get('size');
-    if(this.pageNumber == null) this.pageNumber = 1;
+    if(this.currentPageNumber == null) this.currentPageNumber = 1;
     if(this.pageSize == null) this.pageSize = 10;
-
-    this.selectedItem = this.pageNumber;
-    console.log(this.selectedItem);
   }
 
   ngOnInit(): void {
@@ -43,8 +38,9 @@ export class CartListComponent implements OnInit {
   }
 
   loadCartList() {
-    this.networkCalling.getCartList(this.pageNumber, this.pageSize).subscribe(
+    this.networkCalling.getCartList(this.currentPageNumber, this.pageSize).subscribe(
       data => {
+        console.log(this.currentPageNumber+"---"+this.pageSize);
         this.carts = data.data;
         this.pagination = data.myPagenation;
         this.myPagination();
@@ -56,25 +52,27 @@ export class CartListComponent implements OnInit {
   }
 
   myPagination(){
+    this.totalNumberOfPage = this.pagination.totalPage;
     console.log(this.pagination);
     let startPage = 0;
     let pageLimit = 5;
     if(pageLimit>this.pagination.totalPage){
       pageLimit = this.pagination.totalPage;
     }
-    if(this.pageNumber>3){
-      startPage = this.pageNumber-3;
+    if(this.currentPageNumber>3){
+      startPage = this.currentPageNumber-3;
       if((startPage+pageLimit)>this.pagination.totalPage){
         startPage=this.pagination.totalPage-pageLimit;
       }
     }
     this.collection = Array(pageLimit).fill(this.pagination.totalPage).map((x,i)=>i+startPage+1);
-    this.selectedItem = this.pageNumber;
   }
 
   paginationBtnClicked($event, numberOfBtn){
-    this.pageNumber = numberOfBtn;
-    this.loadCartList();
+    if(numberOfBtn != 0 && numberOfBtn <= this.totalNumberOfPage){
+      this.currentPageNumber = numberOfBtn;
+      this.loadCartList();
+    }
   }
 
 }

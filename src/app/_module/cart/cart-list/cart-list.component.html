@@ -122,16 +122,16 @@
           <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
             <ul class="pagination">
 
-              <li ng-if="pagination.previousPageUrl != null"  class="paginate_button page-item previous disabled" id="example2_previous">
-                <a routerLink="pagination.previousPageUrl" aria-controls="example2" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>
+              <li  class="paginate_button page-item next" [ngClass]="{'disabled': currentPageNumber < 2}" id="example2_next" (click)="paginationBtnClicked($event, ((currentPageNumber*1)-(1*1)))">
+                <a [routerLink]="['/cart',pageSize,'list', ((currentPageNumber*1)-(1*1)) ]" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Previous</a>
               </li>
 
-              <li *ngFor="let inc of collection;" [ngClass]="{'active': selectedItem === inc}" [ngClass]="{'active': inc == routePageNum}" (click)='selectedItem = inc;' class="paginate_button page-item" (click)="paginationBtnClicked($event, inc)">
+              <li *ngFor="let inc of collection;" [ngClass]="{'active': currentPageNumber === inc}" [ngClass]="{'active': inc == currentPageNumber}" (click)='currentPageNumber = inc;' class="paginate_button page-item" (click)="paginationBtnClicked($event, inc)">
                 <a [routerLink]="['/cart',pageSize,'list', inc ]" aria-controls="example2" data-dt-idx="1" tabindex="0" class="page-link">{{ inc }}</a>
               </li>
 
-              <li  class="paginate_button page-item next" id="example2_next">
-                <a [routerLink]="['/cart',pageSize,'list', ((routePageNum*1)+(1*1)) ]" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
+              <li  class="paginate_button page-item next" [ngClass]="{'disabled': currentPageNumber >= totalNumberOfPage}" id="example2_next" (click)="paginationBtnClicked($event, ((currentPageNumber*1)+(1*1)))">
+                <a [routerLink]="['/cart',pageSize,'list', ((currentPageNumber*1)+(1*1)) ]" aria-controls="example2" data-dt-idx="7" tabindex="0" class="page-link">Next</a>
               </li>
             </ul>
           </div>
