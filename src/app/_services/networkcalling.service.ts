@@ -10,7 +10,7 @@ const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 };
 
-const BASE_URL = "http://127.0.0.1:8080/api/v1/";
+const BASE_URL = "http://127.0.0.1:8081/api/v1/";
 
 @Injectable({
   providedIn: 'root'
@@ -125,4 +125,11 @@ export class NetworkcallingService {
     let headers = this.getMultipartHeader();
     return this.http.post(BASE_URL+"navigation/create", body, {headers});
   }
+
+  // Cart Start
+  getCartList(pageNumber: any, pageSize: any) : Observable<any>{  
+    let headers = this.getCommonHeader();
+    return this.http.get(BASE_URL+"cart/consumer/list?page="+pageNumber+"&size="+pageSize, {headers});
+  }
+  // Cart End
 }

@@ -72,6 +72,7 @@ export class NavigationComponent implements OnInit {
 
     let formData = new FormData();
     formData = this.networkCalling.prepareRequestbody(this.inputFormGroup);
+    // formData.set("navigation", JSON.stringify(this.inputFormGroup.value['navigation']));
 
     this.networkCalling.addNavigationRequest(formData).subscribe(
       data => {

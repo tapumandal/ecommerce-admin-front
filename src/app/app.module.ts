@@ -4,12 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { NgSelect2Module } from 'ng-select2';
 import { HomeComponent } from './home/home.component';
 import { AuthModule } from "./_module/auth/auth.module";
+import { SettingsModule } from "src/app/_module/settings/settings.module";
 import { BusinessModule } from "src/app/_module/business/business.module";
 import { ProductModule } from "src/app/_module/product/product.module";
-import { SettingsModule } from "src/app/_module/settings/settings.module";
-import { NgSelect2Module } from 'ng-select2';
+import { CartModule } from "src/app/_module/cart/cart.module";
 
 @NgModule({
   declarations: [
@@ -21,10 +22,11 @@ import { NgSelect2Module } from 'ng-select2';
     HttpClientModule,
     AppRoutingModule,
     AuthModule,
+    NgSelect2Module,
+    SettingsModule,
     BusinessModule,
     ProductModule,
-    NgSelect2Module,
-    SettingsModule
+    CartModule
   ],
   providers: [],
   bootstrap: [AppComponent]
