@@ -1,1 +1,232 @@
-<p>cart-update works!</p>
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Order Invoice</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Cart List</a></li>
+              <li class="breadcrumb-item active">Invoice</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+              <div class="callout callout-info">
+                <h5><i class="fas fa-info"></i> Note:</h5>
+                This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+              </div>
+  
+  
+              <!-- Main content -->
+              <div class="invoice p-3 mb-3">
+                <!-- title row -->
+                <div class="row">
+                  <div class="col-12">
+                    <h4>
+                        <img src="assets/img/logo.svg" width="120px" alt="Super Haat" class="brand-image" style="">
+                       <!-- Super Haat -->
+                      <small class="float-right"><b>Invoice #007612</b><br>Date: 2/10/2014</small>
+                    </h4>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- info row -->
+                <div class="row invoice-info">
+                  <div class="col-sm-4 invoice-col">
+                    From
+                    <address>
+                      <strong>Super Haat</strong><br>
+                      superhaat.shop<br>
+                      Phone: +880 1519 400500<br>
+                      Email: sales@superhaat.shop
+                    </address>
+                  </div>
+                  <!-- /.col -->
+
+                  <div class="col-sm-4"></div>
+
+                  <div class="col-sm-4 invoice-col">
+                    To
+                    <address>
+                      <strong>{{ cart.name }}</strong><br>
+                      {{ cart.mobileNo }}<br>
+                      {{ cart.area }}<br>
+                      {{ cart.address }}<br>
+                    </address>
+                  </div>
+                </div>
+                <!-- /.row -->
+  
+                <!-- Table row -->
+                <div class="row">
+                  <div class="col-12 table-responsive">
+                    <!-- <table class="table table-striped"> -->
+                    <table class="table table-striped projects">
+                        <thead>
+                            <tr>
+                                <th style="width: 1%">
+                                    No
+                                </th>
+                                <th style="width: 1%">
+                                    Image
+                                </th>
+                                <th style="width: 20%">
+                                    Name
+                                </th>
+                                <th style="width: 30%">
+                                    Buying Price
+                                </th>
+                                <th>
+                                    Selling Price
+                                </th>
+                                <th style="width: 8%" class="text-center">
+                                    Status
+                                </th>
+                                <th style="width: 20%">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of cart.productList;">
+                                <td>
+                                    #
+                                </td>
+                                <td>
+                                    <!-- <img style="width: 70px; height: 70px;"  class="images" *ngIf="product.productImages.length > 0" src={{product.productImages[0].url}}/> -->
+                                    <img   class="images"  src={{product.image}}/>
+                                </td>
+                                <td>
+                                    <a>
+                                        {{ product.name }}
+                                    </a>
+                                </td>
+                                
+                                
+                                <td>
+                                    <a>
+                                        {{ product.buyingPricePerUnit }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a>
+                                        {{ product.sellingPricePerUnit }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a>
+                                        {{ product.active }}
+                                    </a>
+                                </td>
+                                <td class="project-actions text-right">
+                                    <a class="btn btn-primary btn-sm" [routerLink]="['/product', product.id]">
+                                        <i class="fas fa-folder">
+                                        </i>
+                                        View
+                                    </a>
+                                    <!-- <a class="btn btn-info btn-sm" href="#">
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Edit
+                                    </a> -->
+                                    <a class="btn btn-danger btn-sm" href="#">
+                                        <i class="fas fa-trash">
+                                        </i>
+                                        Delete
+                                    </a>
+                                </td>
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+  
+                <div class="row">
+                  <!-- accepted payments column -->
+                  <div class="col-6">
+                    <p class="lead">Payment Methods:</p>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-6">
+                    <p class="lead">Amount Due 2/22/2014</p>
+  
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tr>
+                          <th>defaultDiscountBtn:</th>
+                          <td>{{ cart.defaultDiscountBtn }}</td>
+                        </tr>
+                        <tr>
+                          <th>selectedDiscountName: </th>
+                          <td>{{ cart.selectedDiscountName }}</td>
+                        </tr>
+                        <tr>
+                          <th>selectedDiscountType: </th>
+                          <td>{{ cart.selectedDiscountType }}</td>
+                        </tr>
+                        <tr>
+                          <th>selectedDiscountDetails: </th>
+                          <td>{{ cart.selectedDiscountDetails }}</td>
+                        </tr>
+                        <tr>
+                          <th>totalProductDiscount: </th>
+                          <td>{{ cart.totalProductDiscount }}</td>
+                        </tr>
+                        <tr>
+                          <th>totalProductQuantity: </th>
+                          <td>{{ cart.totalProductQuantity }}</td>
+                        </tr>
+                        <tr>
+                          <th>totalProductPrice: </th>
+                          <td>{{ cart.totalProductPrice }}</td>
+                        </tr>
+                        <tr>
+                          <th>totalDiscount: </th>
+                          <td>{{ cart.totalDiscount }}</td>
+                        </tr>
+                        <tr>
+                          <th>totalPayable: </th>
+                          <td>{{ cart.totalPayable }}</td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+  
+                <!-- this row will not appear when printing -->
+                <div class="row no-print">
+                  <div class="col-12">
+                    <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                    <button type="button" class="btn btn-success float-right"><i class="far fa-credit-card"></i> Submit
+                      Payment
+                    </button>
+                    <button type="button" class="btn btn-primary float-right" style="margin-right: 5px;">
+                      <i class="fas fa-download"></i> Generate PDF
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <!-- /.invoice -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->

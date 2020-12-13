@@ -29,7 +29,10 @@ export class PorductDetailsComponent implements OnInit {
   product: Product;
   productId: string;
   
-  constructor(private route: ActivatedRoute, private formBuilder : FormBuilder, private networkCalling: NetworkcallingService, private errorManagement: ErrorManagementService) { 
+  constructor(private route: ActivatedRoute, 
+              private formBuilder : FormBuilder, 
+              private networkCalling: NetworkcallingService, 
+              private errorManagement: ErrorManagementService) { 
     this.productId = this.route.snapshot.paramMap.get('id');
   }
 

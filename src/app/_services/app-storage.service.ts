@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Cart } from '../_model/cart.model';
 import { User } from '../_model/user.model';
 
 const AUTH_TOKEN = "auth-token";
@@ -37,7 +38,7 @@ export class AppStorageService {
     localStorage.setItem(DETAILS_OBJECT, JSON.stringify(objetc));
   }
 
-  getDetailsObject(): User {
+  getDetailsObject(): Cart {
     return JSON.parse(localStorage.getItem(DETAILS_OBJECT));
   }
 
