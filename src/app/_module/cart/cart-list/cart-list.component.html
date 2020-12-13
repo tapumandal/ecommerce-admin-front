@@ -99,11 +99,12 @@
                         </a>
                     </td>
                     <td class="project-actions">
-                        <a class="btn btn-primary btn-sm" [routerLink]="['/cart', cart.id]">
+                        <!-- <a class="btn btn-primary btn-sm" [routerLink]="['/cart', cart.id]">
                             <i class="fas fa-folder">
                             </i>
                             Details
-                        </a>
+                        </a> -->
+                        <a class="btn btn-primary btn-sm" (click)="cartDetails(cart.id)"><i class="fas fa-folder"></i>Details</a>
                     </td>
                   </tr>
                   

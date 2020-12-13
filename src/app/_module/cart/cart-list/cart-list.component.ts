@@ -4,7 +4,8 @@ import { ErrorManagementService } from 'src/app/_services/error-management.servi
 import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
 import { Cart } from 'src/app/_model/cart.model';
 import { Pagination } from 'src/app/_model/pagination.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppStorageService } from 'src/app/_services/app-storage.service';
 
 
 @Component({
@@ -20,8 +21,10 @@ export class CartListComponent implements OnInit {
   currentPageNumber: any;
   totalNumberOfPage: any;
   pageSize: any;
+  storage: AppStorageService;
 
-  constructor(private route: ActivatedRoute, private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { 
+  constructor(private appStorage: AppStorageService, private router: Router, private route: ActivatedRoute, private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { 
+    this.storage = appStorage;
     this.currentPageNumber = this.route.snapshot.paramMap.get('page');
     this.pageSize = this.route.snapshot.paramMap.get('size');
     if(this.currentPageNumber == null) this.currentPageNumber = 1;
@@ -30,11 +33,15 @@ export class CartListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCartList();
+  }
 
-    // for(let i=1; i<=this.pagination.pageSize; i++){
-    //   let Obj = {'page': `${i}`,'size': `20`};
-    //   this.collection.push(Obj);
-    // }
+  cartDetails(cartId: number){
+    this.carts.forEach(element => {
+      if(element.id == cartId){
+        this.storage.storeDetailsObject(element);
+        this.router.navigate(['cart/details']);
+      }
+    });
   }
 
   loadCartList() {

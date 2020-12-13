@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AppStorageService } from 'src/app/_services/app-storage.service';
 
 @Component({
   selector: 'app-cart-update',
@@ -7,9 +8,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CartUpdateComponent implements OnInit {
 
-  constructor() { }
+  constructor(private storage: AppStorageService) { }
 
   ngOnInit(): void {
+    console.log(this.storage.getDetailsObject());
   }
 
 }
