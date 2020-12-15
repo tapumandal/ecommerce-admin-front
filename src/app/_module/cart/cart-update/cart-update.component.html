@@ -29,7 +29,7 @@
   
   
               <!-- Main content -->
-              <div class="invoice p-3 mb-3">
+              <div class="invoice p-3 mb-3" id="invoice">
                 <!-- title row -->
                 <div class="row">
                   <div class="col-12">
@@ -109,7 +109,7 @@
                                     Quantity
                                 </th>
                                 <th>
-                                    Price
+                                    Amount
                                 </th>
                             </tr>
                         </thead>
@@ -181,49 +181,28 @@
   
                 <div class="row">
                   <!-- accepted payments column -->
-                  <div class="col-6">
-                    <p class="lead">Payment Methods:</p>
+                  <div class="col-4">
+                  </div>
+                  <div class="col-4">
                   </div>
                   <!-- /.col -->
-                  <div class="col-6">
-                    <p class="lead">Amount Due 2/22/2014</p>
-  
+                  <div class="col-4">
                     <div class="table-responsive">
                       <table class="table">
                         <tr>
-                          <th>defaultDiscountBtn:</th>
-                          <td>{{ cart.defaultDiscountBtn }}</td>
-                        </tr>
-                        <tr>
-                          <th>selectedDiscountName: </th>
-                          <td>{{ cart.selectedDiscountName }}</td>
-                        </tr>
-                        <tr>
-                          <th>selectedDiscountType: </th>
-                          <td>{{ cart.selectedDiscountType }}</td>
-                        </tr>
-                        <tr>
-                          <th>selectedDiscountDetails: </th>
-                          <td>{{ cart.selectedDiscountDetails }}</td>
-                        </tr>
-                        <tr>
-                          <th>totalProductDiscount: </th>
-                          <td>{{ cart.totalProductDiscount }}</td>
-                        </tr>
-                        <tr>
-                          <th>totalProductQuantity: </th>
-                          <td>{{ cart.totalProductQuantity }}</td>
-                        </tr>
-                        <tr>
-                          <th>totalProductPrice: </th>
+                          <th>Subtotal: </th>
                           <td>{{ cart.totalProductPrice }}</td>
                         </tr>
                         <tr>
-                          <th>totalDiscount: </th>
-                          <td>{{ cart.totalDiscount }}</td>
+                          <th>Discount ({{ cart.selectedDiscountName }}): </th>
+                          <td>{{ cart.totalDiscount }} ৳</td>
                         </tr>
                         <tr>
-                          <th>totalPayable: </th>
+                          <th>Delivery: </th>
+                          <td>{{ cart.deliveryCharge }}</td>
+                        </tr>
+                        <tr>
+                          <th>Total Payable: </th>
                           <td>{{ cart.totalPayable }}</td>
                         </tr>
                       </table>
@@ -237,7 +216,9 @@
                 <div class="row no-print">
                   <div class="col-12">
                     <!-- <a href="invoice-print.html" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a> -->
-                    <a (click)="print()" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print</a>
+                    <a (click)="printCustomerCopy()" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print Customer Copy</a>
+                    <a (click)="printCompanyCopy()" target="_blank" class="btn btn-default"><i class="fas fa-print"></i> Print Company Copy</a>
+                    <a (click)="invoiceReset()" target="_blank" class="btn btn-default"> Reset</a>
                   </div>
                 </div>
               </div>

@@ -5,3 +5,14 @@
 .visibleColumn{
     display: table-cell;
 }
+
+.table td{
+    padding: .25rem;
+}
+
+@media print
+{
+body * { visibility: hidden; }
+.invoice * { visibility: visible; }
+.invoice { position: absolute; top: 40px; left: 30px; }
+}
