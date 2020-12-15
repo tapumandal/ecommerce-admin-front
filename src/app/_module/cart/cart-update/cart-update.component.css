@@ -1,0 +1,7 @@
+.hideColumn{
+    display: none;
+}
+
+.visibleColumn{
+    display: table-cell;
+}

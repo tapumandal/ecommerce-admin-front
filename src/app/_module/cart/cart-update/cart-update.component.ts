@@ -15,6 +15,8 @@ export class CartUpdateComponent implements OnInit {
 
   cart: Cart;
   inputFormGroup: FormGroup;
+  isCustomer:boolean = false;
+  hideInPrint:boolean = false;
 
 
   constructor(private storage: AppStorageService, 
@@ -28,6 +30,11 @@ export class CartUpdateComponent implements OnInit {
     this.cart = this.storage.getDetailsObject();
 
     this.inputFormGroup = this.formBuilder.group(this.cart);
+  }
+
+  print(){
+    this.isCustomer = true;
+    this.hideInPrint = true;
   }
 
   update(){
