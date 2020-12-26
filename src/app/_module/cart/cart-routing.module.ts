@@ -11,7 +11,7 @@ const routes: Routes = [
     children:[
       {path: "cart/list", component: CartListComponent},
       {path: "cart/:size/list/:page", component: CartListComponent},
-      {path: "cart/update", component: CartUpdateComponent}
+      {path: "cart/details", component: CartUpdateComponent}
     ]
   }
 ];

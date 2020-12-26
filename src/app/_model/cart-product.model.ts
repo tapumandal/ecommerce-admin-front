@@ -6,6 +6,7 @@ export class CartProduct {
     categories: string = "";
     preSelectedCategories: string = "";
     description: string = "";
+    buyingPricePerUnit: number = 0;
     sellingPricePerUnit: number = 0;
     discountPrice: number = 0;
     discountTitle: string = "";

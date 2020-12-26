@@ -4,7 +4,8 @@ import { ErrorManagementService } from 'src/app/_services/error-management.servi
 import { NetworkcallingService } from 'src/app/_services/networkcalling.service';
 import { Cart } from 'src/app/_model/cart.model';
 import { Pagination } from 'src/app/_model/pagination.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AppStorageService } from 'src/app/_services/app-storage.service';
 
 
 @Component({
@@ -17,34 +18,36 @@ export class CartListComponent implements OnInit {
   carts: Cart[];
   pagination: Pagination;
   collection: number[];
-  pageNumber: any;
+  currentPageNumber: any;
+  totalNumberOfPage: any;
   pageSize: any;
-  selectedItem: any;
-  routePageNum: any;
+  storage: AppStorageService;
 
-  constructor(private route: ActivatedRoute, private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { 
-    this.pageNumber = this.route.snapshot.paramMap.get('page');
-    this.routePageNum = this.pageNumber;
+  constructor(private appStorage: AppStorageService, private router: Router, private route: ActivatedRoute, private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { 
+    this.storage = appStorage;
+    this.currentPageNumber = this.route.snapshot.paramMap.get('page');
     this.pageSize = this.route.snapshot.paramMap.get('size');
-    if(this.pageNumber == null) this.pageNumber = 1;
+    if(this.currentPageNumber == null) this.currentPageNumber = 1;
     if(this.pageSize == null) this.pageSize = 10;
-
-    this.selectedItem = this.pageNumber;
-    console.log(this.selectedItem);
   }
 
   ngOnInit(): void {
     this.loadCartList();
+  }
 
-    // for(let i=1; i<=this.pagination.pageSize; i++){
-    //   let Obj = {'page': `${i}`,'size': `20`};
-    //   this.collection.push(Obj);
-    // }
+  cartDetails(cartId: number){
+    this.carts.forEach(element => {
+      if(element.id == cartId){
+        this.storage.storeDetailsObject(element);
+        this.router.navigate(['cart/details']);
+      }
+    });
   }
 
   loadCartList() {
-    this.networkCalling.getCartList(this.pageNumber, this.pageSize).subscribe(
+    this.networkCalling.getCartList(this.currentPageNumber, this.pageSize).subscribe(
       data => {
+        console.log(this.currentPageNumber+"---"+this.pageSize);
         this.carts = data.data;
         this.pagination = data.myPagenation;
         this.myPagination();
@@ -56,25 +59,27 @@ export class CartListComponent implements OnInit {
   }
 
   myPagination(){
+    this.totalNumberOfPage = this.pagination.totalPage;
     console.log(this.pagination);
     let startPage = 0;
     let pageLimit = 5;
     if(pageLimit>this.pagination.totalPage){
       pageLimit = this.pagination.totalPage;
     }
-    if(this.pageNumber>3){
-      startPage = this.pageNumber-3;
+    if(this.currentPageNumber>3){
+      startPage = this.currentPageNumber-3;
       if((startPage+pageLimit)>this.pagination.totalPage){
         startPage=this.pagination.totalPage-pageLimit;
       }
     }
     this.collection = Array(pageLimit).fill(this.pagination.totalPage).map((x,i)=>i+startPage+1);
-    this.selectedItem = this.pageNumber;
   }
 
   paginationBtnClicked($event, numberOfBtn){
-    this.pageNumber = numberOfBtn;
-    this.loadCartList();
+    if(numberOfBtn != 0 && numberOfBtn <= this.totalNumberOfPage){
+      this.currentPageNumber = numberOfBtn;
+      this.loadCartList();
+    }
   }
 
 }
