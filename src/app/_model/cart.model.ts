@@ -18,5 +18,6 @@ export class Cart {
     totalDiscount: number;
     totalPayable: number;
     productList: CartProduct[];
-    createdAt: string
+    createdAt: string;
+    status: string;
 }

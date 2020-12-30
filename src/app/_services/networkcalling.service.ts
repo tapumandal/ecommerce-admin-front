@@ -132,5 +132,9 @@ export class NetworkcallingService {
     let headers = this.getCommonHeader();
     return this.http.get(BASE_URL+"cart/consumer/list?page="+pageNumber+"&size="+pageSize, {headers});
   }
+  updateCart(body: any) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.post(BASE_URL+"cart/update", body, {headers});
+  }  
   // Cart End
 }

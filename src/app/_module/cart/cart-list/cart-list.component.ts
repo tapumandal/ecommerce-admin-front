@@ -22,6 +22,7 @@ export class CartListComponent implements OnInit {
   totalNumberOfPage: any;
   pageSize: any;
   storage: AppStorageService;
+  statuses: string[] = ["Processing", "Picked", "Delivered"];
 
   constructor(private appStorage: AppStorageService, private router: Router, private route: ActivatedRoute, private networkCalling : NetworkcallingService, private errorManagement : ErrorManagementService) { 
     this.storage = appStorage;
@@ -56,6 +57,24 @@ export class CartListComponent implements OnInit {
         this.errorManagement.responseFaield(err);
       }
     )
+  }
+
+  changeStatus(cartId:number, status:string){
+    this.carts.forEach(element => {
+      if(element.id == cartId){
+        element.status = status;
+        console.log(element);
+        this.networkCalling.updateCart(element).subscribe(
+          data =>{
+            console.log("Status Updated");
+            console.log(data.data);
+          },
+          err => {
+            console.log("Something is wrong");
+          }
+        )
+      }
+    });
   }
 
   myPagination(){

@@ -17,7 +17,7 @@ export class CartUpdateComponent implements OnInit {
   inputFormGroup: FormGroup;
   isCustomer:boolean = false;
   hideInPrint:boolean = false;
-
+  statuses:any[] = ["Processing", "Picked", "Delivered"];
 
   constructor(private storage: AppStorageService, 
               private route: ActivatedRoute, 
