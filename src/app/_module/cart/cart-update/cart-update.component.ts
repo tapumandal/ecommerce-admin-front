@@ -17,7 +17,7 @@ export class CartUpdateComponent implements OnInit {
   inputFormGroup: FormGroup;
   isCustomer:boolean = false;
   hideInPrint:boolean = false;
-  statuses:any[] = ["Processing", "Picked", "Delivered"];
+  statuses:any[] = ["Pending", "Processing", "Picked", "Delivered"];
 
   constructor(private storage: AppStorageService, 
               private route: ActivatedRoute, 
@@ -30,6 +30,21 @@ export class CartUpdateComponent implements OnInit {
     this.cart = this.storage.getDetailsObject();
 
     this.inputFormGroup = this.formBuilder.group(this.cart);
+  }
+
+  
+  changeStatus(cartId:number, status:string){
+      if(this.cart.id == cartId){
+        this.cart.status = status;
+        this.networkCalling.updateCart(this.cart).subscribe(
+          data =>{
+            console.log("Status Updated");
+          },
+          err => {
+            console.log("Something is wrong");
+          }
+        )
+      }
   }
 
   print(){

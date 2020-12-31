@@ -115,8 +115,8 @@
                     </td>
                     <td>
                       <div class="form-group">
-                        <select class="form-control" formControlName="status" (change)="changeStatus(cart.id, changedStatus.value)" #changedStatus>
-                          <option *ngFor="let status of statuses" [value]="status" >{{ status }}</option>
+                        <select class="form-control" (change)="changeStatus(cart.id, changedStatus.value)" #changedStatus>
+                          <option *ngFor="let status of statuses" [value]="status" [selected]="cart.status == status" >{{ status }}</option>
                         </select>
                       </div>
                     </td>
