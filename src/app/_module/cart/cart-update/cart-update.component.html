@@ -23,8 +23,11 @@
           <div class="row">
             <div class="col-12">
               <div class="callout callout-info">
-                <h5><i class="fas fa-info"></i> Note:</h5>
-                This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+                <div class="col-sm-3 col-sm-offset-9 form-group" style="margin-bottom: 0px;">
+                  <select class="form-control" (change)="changeStatus(cart.id, changedStatus.value)" #changedStatus>
+                    <option *ngFor="let status of statuses" [value]="status" [selected]="cart.status == status" >{{ status }}</option>
+                  </select>
+                </div>
               </div>
   
   
@@ -36,7 +39,9 @@
                     <h4>
                         <img src="assets/img/logo.svg" width="120px" alt="Super Haat" class="brand-image" style="">
                        <!-- Super Haat -->
-                      <small class="float-right"><b>Invoice #007612</b><br>Date: 2/10/2014</small>
+                      <small class="float-right">
+                        <!-- <b>Invoice #007612</b> -->
+                        Date: {{cart.createdAt | date: 'MM-dd-yyyy'}}</small>
                     </h4>
                   </div>
                   <!-- /.col -->

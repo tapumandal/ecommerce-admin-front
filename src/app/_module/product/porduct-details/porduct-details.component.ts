@@ -45,10 +45,7 @@ export class PorductDetailsComponent implements OnInit {
       tags: true,
       theme: 'bootstrap4'
     };
-
-
-
-
+    
     this.product = new Product();
     this.companies = [];
     this.categorySelected = [];

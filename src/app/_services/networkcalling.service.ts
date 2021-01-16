@@ -11,6 +11,7 @@ const httpOptions = {
 };
 
 const BASE_URL = "http://127.0.0.1:8081/api/v1/";
+// const BASE_URL = "http://122.248.192.247/api/v1/"; //aws live
 
 @Injectable({
   providedIn: 'root'
@@ -58,7 +59,7 @@ export class NetworkcallingService {
 
   getProductById(id : string) : Observable<any>{  
     let headers = this.getCommonHeader();
-    return this.http.get(BASE_URL+"product/"+id, {headers});
+    return this.http.get(BASE_URL+"product/consumer/"+id, {headers});
   }
 
   getProductList() : Observable<any>{  
@@ -131,5 +132,9 @@ export class NetworkcallingService {
     let headers = this.getCommonHeader();
     return this.http.get(BASE_URL+"cart/consumer/list?page="+pageNumber+"&size="+pageSize, {headers});
   }
+  updateCart(body: any) : Observable<any>{
+    let headers = this.getMultipartHeader();
+    return this.http.post(BASE_URL+"cart/update", body, {headers});
+  }  
   // Cart End
 }

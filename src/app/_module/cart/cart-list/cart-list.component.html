@@ -41,6 +41,9 @@
                           No
                       </th>
                       <th>
+                        Consumer
+                      </th>
+                      <th>
                           Order Placed
                       </th>
                       <th>
@@ -59,24 +62,36 @@
                           Address
                       </th>
                       <th>
+                        Status
+                      </th>
+                      <th>
                         Action
                       </th>
                   </tr>
               </thead>
               <tbody>
                   <tr *ngFor="let cart of carts;">
-                      <td>
-                          #
-                      </td>
-                      <td>
-                          <a>
-                             {{ cart.createdAt }}
-                          </a>
-                      </td>
-                      <td>
+                    <td>
+                        #
+                    </td>
+                    <td>
+                      <a>
+                          {{ cart.name }}
+                          <br>
+                          {{ cart.mobileNo }}
+                      </a>
+                    </td>
+                    <td>
                         <a>
-                           {{ cart.totalPayable }}
+                            {{cart.createdAt | date: 'yyyy-MM-dd'}}
+                            <br>
+                            {{cart.createdAt | date: 'hh:mm a'}}
                         </a>
+                    </td>
+                    <td>
+                      <a>
+                          {{ cart.totalPayable }}
+                      </a>
                     </td>
                     <td>
                         <a>
@@ -97,6 +112,13 @@
                         <a>
                            {{ cart.address }}
                         </a>
+                    </td>
+                    <td>
+                      <div class="form-group">
+                        <select class="form-control" (change)="changeStatus(cart.id, changedStatus.value)" #changedStatus>
+                          <option *ngFor="let status of statuses" [value]="status" [selected]="cart.status == status" >{{ status }}</option>
+                        </select>
+                      </div>
                     </td>
                     <td class="project-actions">
                         <!-- <a class="btn btn-primary btn-sm" [routerLink]="['/cart', cart.id]">
